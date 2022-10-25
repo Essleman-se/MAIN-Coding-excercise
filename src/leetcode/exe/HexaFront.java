@@ -833,6 +833,33 @@ public class HexaFront {
         //Space Complexity O(R * C)the space used by the resMatr.
     }
 
+    //Intersection of Two Arrays
+    public static int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set = new HashSet();
+        for(int n : nums1){
+            set.add(n);
+        }
+
+        Set<Integer> commonNums = new HashSet<>();
+        for(int n : nums2){
+            if(set.contains(n)){
+                commonNums.add(n);
+            }
+        }
+
+        int[] result = new int[commonNums.size()];
+        int indx = 0;
+        for(int n : commonNums){
+            result[indx++] = n;
+        }
+
+        return result;
+
+        //Time Complexity : O(n+M) in the average case and O(n*m) in the worst case
+        //Space Complexity : o(n+m) in the worst case when all elements in the array are
+        // different
+    }
+
     public static void main(String[] args){
         String[] strs = {"dog","racecar","car"};
         int[] ints = {-1,0,3,5,9,12};
@@ -842,12 +869,13 @@ public class HexaFront {
         HexaFront.Logger logger = hexa.new Logger();
         //System.out.println(logger.shouldPrintMessage(1, "foo"));
         //System.out.println("Index of first unic character is :   " + firstUniqChar("aabb"));
-        int[] nums1 = {1,2,3,0,0,0};
+        int[] nums1 = {4,9,5};
         int m = 3;
-        int[] nums2 = {2,5,6};
+        int[] nums2 = {9,4,9,8,4};
         int n = 3;
         //merge(nums1, m, nums2, n);
-        System.out.println(fib(2));
+        //System.out.println(fib(2));
+        System.out.println(Arrays.toString(intersection(nums1, nums2)));
         //System.out.println(uniqueOccurrences(ints));
         //System.out.println(generate(5));
         //System.out.println(search(ints, 9));
