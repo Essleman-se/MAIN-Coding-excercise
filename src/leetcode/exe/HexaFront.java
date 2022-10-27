@@ -860,6 +860,33 @@ public class HexaFront {
         // different
     }
 
+    //Move Zeroes
+    public static void moveZeroes(int[] nums) {
+
+        int j = 0;
+
+        // for(int i=0; i < nums.length; i++){
+        //     if(nums[i] == 0 && nums[j] != 0){
+        //         j = i;
+        //     }else if(nums[i] != 0 && nums[j] == 0 ){
+        //         nums[j] = nums[i];
+        //         nums[i] = 0;
+        //         j++;
+        //     }
+        // }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                int temp = nums[j];
+                nums[j++] = nums[i];
+                nums[i] = temp;
+            }
+        }
+
+        System.out.println(Arrays.toString(nums));
+
+        //Time and space complexity O(1);
+    }
+
     public static void main(String[] args){
         String[] strs = {"dog","racecar","car"};
         int[] ints = {-1,0,3,5,9,12};
@@ -869,13 +896,14 @@ public class HexaFront {
         HexaFront.Logger logger = hexa.new Logger();
         //System.out.println(logger.shouldPrintMessage(1, "foo"));
         //System.out.println("Index of first unic character is :   " + firstUniqChar("aabb"));
-        int[] nums1 = {4,9,5};
+        int[] nums1 = {4,1,0,3,0};
         int m = 3;
         int[] nums2 = {9,4,9,8,4};
         int n = 3;
+        moveZeroes(nums1);
         //merge(nums1, m, nums2, n);
         //System.out.println(fib(2));
-        System.out.println(Arrays.toString(intersection(nums1, nums2)));
+        //System.out.println(Arrays.toString(intersection(nums1, nums2)));
         //System.out.println(uniqueOccurrences(ints));
         //System.out.println(generate(5));
         //System.out.println(search(ints, 9));
