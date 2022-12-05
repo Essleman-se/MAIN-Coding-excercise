@@ -255,6 +255,16 @@ public class HexaFront {
 
         return prev;
     }
+
+//    public void display() {
+//        ListNode current = head;
+//        while(current != null) {
+//            System.out.print(current.data + " --> ");
+//            current = current.next;
+//        }
+//        System.out.print("null");
+//        System.out.println();
+//    }
     public static boolean isPalindrome(ListNode head) {
 
 
@@ -307,11 +317,7 @@ public class HexaFront {
 //        We are changing the next pointers for half of the nodes. This was all memory that had
 //        already been allocated, so we are not using any extra memory and therefore it is O(1)O(1).
         ////////////How the node is create ///////////
-//        ListNode node = new ListNode(1);
-//        node.next = node;
-//        ListNode second = new ListNode(2);
-//        ListNode third = new ListNode(2);
-//        ListNode forth = new ListNode(8);
+
 
     }
 
@@ -887,6 +893,599 @@ public class HexaFront {
         //Time and space complexity O(1);
     }
 
+    //Remove Palindromic Subsequences
+    public static int removePalindromeSub(String s) {
+//        if (s.isEmpty()) {
+//            return 0;
+//        }
+//        // See below for code that compacts this into one line.
+//        StringBuilder sb = new StringBuilder(s);
+//        sb.reverse();
+//        String reversedString = sb.toString();
+//        if (reversedString.equals(s)) {
+//            return 1;
+//        }
+//        return 2;
+        //Above senario Time and space complexity is O(n)
+//////////////////////////////////////////////////////////////////////
+
+
+        if(s.isEmpty()) return 0;
+        int i=0;
+        int j=s.length()-1;
+        while(i < j){
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                j--;
+            }else{
+                return 2;
+            }
+        }
+
+        return 1;
+        //This is approach scenario
+        // Time complexity O(n)
+        // Space complexity is O(1)
+
+        //loops up to n/2 times
+    }
+
+    //Remove Duplicates from Sorted Array
+    public static int removeDuplicates(int[] nums) {
+        int indx = 1;
+
+        for(int i=0; i < nums.length-1; i++){
+            if(nums[i] != nums[i+1]){
+                nums[indx++] = nums[i+1];
+            }
+        }
+
+        System.out.println(Arrays.toString(nums));
+
+        return indx;
+
+        //Time Complexity O(n)
+        //Space Complexity O(1)
+    }
+
+    //Reverse Linked List
+    public ListNode reverseList(ListNode head) {
+
+        ListNode prev = null;
+        while(head != null){
+            ListNode tempNode = head.next;
+            head.next = prev;
+            prev = head;
+            head = tempNode;
+        }
+
+        return prev;
+
+        //Time complexity :O(n). Assume that nn is the list's length, the time complexity is O(n).
+        //Space complexity : O(1).
+
+
+        ////How to create node
+//        ListNode head = new ListNode(10);
+//        ListNode second = new ListNode(20);
+//        ListNode third = new ListNode(4);
+//        ListNode fourth = new ListNode(100);
+//
+//        //Attach them together
+//        head.next = second; //10-->20
+//        second.next = third; //10-->20-->4
+//        third.next = fourth; //10-->20-->4--100
+        /////////end/////////////////////////
+    }
+
+    //Contains Duplicate II
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap();
+
+        for(int i=0; i < nums.length; i++){
+            if(map.containsKey(nums[i]) && i - map.get(nums[i]) <= k){
+                return true;
+            }else{
+                map.put(nums[i], i);
+            }
+        }
+
+        return false;
+
+        //Time Complexity O(n)
+        //Space Complexity O(n)
+    }
+
+    //Reverse Words in a String III
+    public static String reverseWords(String s) {
+     //it is a good approch regarding memory usage
+            int j = 0;
+            char[] chs = s.toCharArray();
+            for(int i=0; i < chs.length; i++){
+                if(chs[i] == ' '){
+                    revers(chs, j, i-1);
+                    j = i + 1;
+                }
+            }
+
+            revers(chs, j, chs.length-1 );
+
+            return new String(chs);
+            ////////////////////////////////////////////////
+           //Time complecity O(n)
+           //Space Coplexity O(n)
+           ////////////////////////////////////////////////
+
+   //     String[] strArray = s.split(" ");
+//        StringBuilder sb = new StringBuilder();
+//        for(int i=0; i < strArray.length; i++){
+//            String revWor = revers(strArray[i]);
+//            if(sb.toString().isEmpty()){
+//                sb.append(revWor);
+//            }else{
+//                sb.append(" ");
+//                sb.append(revers(revWor));
+//            }
+//        }
+//
+//        return sb.toString();
+        }
+    private static void revers(char[] chs, int j, int i) {
+
+        while (j <= i) {
+            char temp = chs[j];
+            chs[j] = chs[i];
+            chs[i] = temp;
+
+            j++;
+            i--;
+        }
+    }
+    //Richest Customer Wealth
+    public static int maximumWealth(int[][] accounts) {
+        int max = Integer.MIN_VALUE;
+        for(int i=0; i < accounts.length; i++){
+            int sum=0;
+            for(int j=0; j < accounts[i].length; j++){
+                sum += accounts[i][j];
+            }
+            max = Math.max(max, sum);
+        }
+
+        return max;
+
+        //Time complexity O(m*n)
+        //Space Complexity O(1)
+    }
+
+
+
+
+//    private static String revers(String s){
+//        StringBuilder sb = new StringBuilder();
+//        for(int i = s.length()-1; i >= 0; i--){
+//            sb.append(s.charAt(i));
+//        }
+//
+//        return sb.toString();
+//    }
+
+    //Majority Element
+    public static int majorityElement(int[] nums) {
+        ///////////////////More faster approch//////////
+        if(nums.length == 1){
+            return nums[0];
+        }
+        Map<Integer, Integer> map = new HashMap();
+
+        for(int i : nums){
+            if(map.containsKey(i) && map.get(i)+1 > nums.length/2){
+                return i;
+            }else{
+                map.put(i, map.getOrDefault(i, 0)+1);
+            }
+        }
+
+        return -1;
+
+        /////////////////////////////////////////////////////
+//        Map<Integer, Integer> map = new HashMap();
+//        for(int i : nums){
+//            map.put(i, map.getOrDefault(i, 0)+1);
+//        }
+//
+//        for(int i : map.keySet()){
+//            if(map.get(i) > nums.length/2){
+//                return i;
+//            }
+//        }
+//
+//        return -1;
+
+        //for all approach
+        //Time complexity O(n)
+        //Space complexity O(n)
+    }
+    //Count Binary Substrings
+    public static int countBinarySubstrings(String s) {
+        int count=0, i=1, curr=1, prev=0;
+
+        while(i < s.length()){
+            if(s.charAt(i-1) != s.charAt(i)){
+                count += Math.min(prev, curr);
+                prev = curr;
+                curr = 1;
+            }else{
+                curr++;
+            }
+
+            i++;
+        }
+
+        return count += Math.min(prev, curr);
+
+        //Time Complexity O(n)
+        //Space Complexity O(1)
+    }
+
+    //Next Greater Element I
+    public static int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<>();
+        Stack<Integer> stack = new Stack();
+
+        for(Integer num : nums2){
+            while(!stack.isEmpty() && stack.peek() < num){
+                map.put(stack.pop(), num);
+            }
+            stack.push(num);
+        }
+
+        for(int i=0; i < nums1.length; i++){
+            nums1[i] = map.getOrDefault(nums1[i], -1);
+        }
+
+
+        return nums1;
+
+        //Time Complexity O(n)
+        //Space Complexity O(n)
+    }
+
+    //Find Pivot Index
+    public static int pivotIndex(int[] nums) {
+        int totalSum = 0;
+        int leftSum = 0;
+
+        for(int num : nums){
+            totalSum += num;
+        }
+
+        for(int i=0; i < nums.length; i++){
+            if(i != 0)
+                leftSum += nums[i-1];
+
+            if(totalSum - leftSum - nums[i] == leftSum){
+                return i;
+            }
+        }
+
+        return -1;
+
+        //Time Complexity O(n)
+        //Space complexity O(1)
+    }
+
+    //Ransom Note
+    public static boolean canConstruct(String ransomNote, String magazine) {
+        HashMap<Character, Integer> counts = new HashMap<>();
+
+        for(char c : magazine.toCharArray()){
+            counts.put(c, counts.getOrDefault(c, 0) + 1);
+        }
+
+        for(char c : ransomNote.toCharArray()){
+            if(!counts.containsKey(c) || counts.get(c) <= 0){
+                return false;
+            }
+
+            counts.put(c, counts.get(c) - 1);
+        }
+
+        return true;
+        //Time Complexity O(m+n)
+        //Space Complexity O(n), because store chars into map from magazine string
+    }
+
+    //Valid Palindrome
+    public boolean isPalindrome(String s) {
+        String str =  s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        StringBuilder sb = new StringBuilder();
+        int indx = 0;
+        for(int i=str.length()-1; i >= 0; i--){
+            if(str.charAt(indx++) != str.charAt(i)){
+                return false;
+            }
+        }
+        return true;
+        //Time comlexity O(n)
+        //Space complexity O(n)
+    }
+    //Isomorphic Strings
+    public boolean isIsomorphic(String s, String t) {
+
+        HashMap<Character, Character> map = new HashMap<>();
+
+        for(int i=0; i < s.length(); i++){
+            char x = s.charAt(i);
+            char y = t.charAt(i);
+
+            if(map.containsKey(x)){
+                if(!map.get(x).equals(y))
+                    return false;
+            }else{
+                if(!map.containsValue(y))
+                    map.put(x, y);
+                else
+                    return false;
+
+            }
+        }
+
+        return true;
+
+        //Time Complexity O(n)
+        //Space complexity O(n)
+
+//        Map<Character, Integer> map1 = new HashMap<>();
+//        Map<Character, Integer> map2 = new HashMap<>();
+//
+//        for(Integer i = 0; i <s.length(); i ++) {
+//            if(map1.put(s.charAt(i), i) != map2.put(t.charAt(i), i))
+//                return false;
+//        }
+//        return true;
+    }
+
+    //Reverse Vowels of a String
+    public String reverseVowels(String s) {
+        char[] chars = s.toCharArray();
+        Set<Character> vowels = new HashSet<>();
+        vowels.add('A');
+        vowels.add('a');
+        vowels.add('E');
+        vowels.add('e');
+        vowels.add('I');
+        vowels.add('i');
+        vowels.add('O');
+        vowels.add('o');
+        vowels.add('U');
+        vowels.add('u');
+
+        int i=0, j=s.length()-1;
+        while(i < j){
+            while(i < j && !vowels.contains(chars[i])){
+                i++;
+            }
+
+            while(i < j && !vowels.contains(chars[j])){
+                j--;
+            }
+
+            char temp = chars[i];
+            chars[i++] = chars[j];
+            chars[j--] = temp;
+
+        }
+
+        return new String(chars);
+
+        //time comlexity O(n)
+        //space O(n)
+    }
+
+    //Missing Number
+    public static int missingNumber(int[] nums) {
+        int sum = 0;
+        for(int num : nums){
+            sum += num;
+        }
+
+        int x = nums.length+1;
+        return (x*(x-1)/2)-sum;
+
+        //Time Complexity O(n)
+        //Space Complexity O(1)
+///////////////////////////////////////////////////////////////
+//        Set<Integer> set = new HashSet<>();
+//
+//        for(int num : nums){
+//            set.add(num);
+//        }
+//
+//        for(int i=0; i <= nums.length; i++){
+//            if(!set.contains(i)){
+//                return i;
+//            }
+//        }
+//
+//        return -1;
+        //Time Complexity O(n)
+        //Space Complexity O(n)
+    }
+
+    //Remove All Adjacent Duplicates In String
+    public static String removeDuplicates(String s) {
+        int j = 0;
+        char[] stack = new char[s.length()];
+
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(j > 0 && stack[j-1] == c){
+                j--;
+            }else{
+                stack[j] = c;
+                j++;
+            }
+        }
+
+        return new String(stack, 0, j);
+        //Time complexity O(n)
+        //Space Complexity O(n)
+
+//        StringBuilder sb = new StringBuilder();
+//        Stack<Character> stack = new Stack();
+//
+//        for(int i=0; i < s.length(); i++){
+//            char c = s.charAt(i);
+//            if(stack.isEmpty() || stack.peek() != c){
+//                stack.push(c);
+//            }else{
+//                stack.pop();
+//            }
+//        }
+//
+//        while(!stack.isEmpty()){
+//            sb.append(stack.pop());
+//
+//        }
+//
+//        return sb.reverse().toString();
+
+        //same complexity with the above one but a bit slow
+
+    }
+
+
+    ////////////////////Medium Questions////////////////////////////////
+    //Merge Intervals
+    public int[][] merge(int[][] intervals) {
+
+        Arrays.sort(intervals, (arr1, arr2) -> Integer.compare(arr1[0], arr2[0]));
+        int[] curArr = intervals[0];
+        List<int[]> resultArr = new ArrayList<>();
+        resultArr.add(curArr);
+
+        for(int[] interval : intervals){
+            int curStart = curArr[0];
+            int curEnd = curArr[1];
+            int nextStart = interval[0];
+            int nextEnd = interval[1];
+
+            if(curEnd >= nextStart){
+                curArr[1] = Math.max(curEnd, nextEnd);
+
+            }else{
+                curArr = interval;
+                resultArr.add(curArr);
+            }
+        }
+
+        return resultArr.toArray(new int[resultArr.size()][]);
+
+        //Time comp O(n);
+        //Space Comp O(n)
+    }
+
+    // Number of Islands
+    public static int numIslands(char[][] grid) {
+        int count = 0;
+
+        for(int i=0; i < grid.length; i++){
+            System.out.println(Arrays.deepToString(grid));
+            for(int j=0; j < grid[i].length; j++){
+                System.out.println(Arrays.deepToString(grid));
+                if(grid[i][j] == '1'){
+                    count++;
+                    callBFS(grid, i, j);
+                }
+            }
+        }
+
+        return count;
+        //T com O(M * N) number of row and column
+        //Space com worest case O(M * N)
+    }
+
+    private static void callBFS(char[][] grid, int i, int j){
+        if(i<0 || i>=grid.length || j<0 || j>=grid[i].length || grid[i][j]=='0')
+            return;
+
+        grid[i][j] = '0';
+        System.out.println(Arrays.deepToString(grid));
+        callBFS(grid, i+1, j); //up
+        System.out.println(Arrays.deepToString(grid));
+        callBFS(grid, i-1, j); //down
+        System.out.println(Arrays.deepToString(grid));
+        callBFS(grid, i, j-1); //left
+        System.out.println(Arrays.deepToString(grid));
+        callBFS(grid, i, j+1); //right
+        System.out.println(Arrays.deepToString(grid));
+
+    }
+
+    //Longest Substring Without Repeating Characters
+    public static int lengthOfLongestSubstring(String s) {
+        HashSet<Character> set = new HashSet<>();
+        int maxLen = 0;
+        int j = 0;
+        int i = 0;
+
+        while(i < s.length()){
+            if(!set.contains(s.charAt(i))){
+                set.add(s.charAt(i));
+                maxLen = Math.max(set.size(), maxLen);
+                i++;
+            }else{
+                set.remove(s.charAt(j));
+                j++;
+            }
+
+        }
+
+//        for(int i=0; i<s.length(); i++){
+//            if (!set.contains(s.charAt(i))){
+//                set.add(s.charAt(i));
+//                maxLen = Math.max(set.size(), maxLen);
+//            }else{
+//                set.remove(s.charAt(j));
+//                j++;
+//                i--;
+//            }
+//        }
+
+
+
+
+        return maxLen;
+    }
+
+    //Add Two Numbers
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        int carry = 0;
+
+        while(l1 != null || l2 != null){
+            int x = l1 != null ? l1.val : 0;
+            int y = l2 != null ? l2.val : 0;
+            int sum = x + y + carry;
+            carry = sum/10;
+            int remainder = sum%10;
+            curr.next = new ListNode(remainder);
+            curr = curr.next;
+
+            if(l1 != null) l1 = l1.next;
+            if(l2 != null) l2 = l2.next;
+        }
+
+        if(carry > 0)
+            curr.next = new ListNode(carry);
+
+        return dummy.next;
+        //Time complexity O(max(l1, l2)
+        //Space Complexity O(1)
+    }
     public static void main(String[] args){
         String[] strs = {"dog","racecar","car"};
         int[] ints = {-1,0,3,5,9,12};
@@ -896,11 +1495,45 @@ public class HexaFront {
         HexaFront.Logger logger = hexa.new Logger();
         //System.out.println(logger.shouldPrintMessage(1, "foo"));
         //System.out.println("Index of first unic character is :   " + firstUniqChar("aabb"));
-        int[] nums1 = {4,1,0,3,0};
+        int[] nums1 = {2,4};
         int m = 3;
-        int[] nums2 = {9,4,9,8,4};
+        int[] nums2 = {1,2,3,4};
+        int[] nums = {3, 0, 1};
         int n = 3;
-        moveZeroes(nums1);
+        int[][] accounts = {{1,2,3},{3,2,1}};
+        String ransomNote = "aa", magazine = "aab";
+        //System.out.println(removeDuplicates("abbaac"));
+        char[][] grid = {{'1','1','0','0','0'},
+                          {'1','1','0','0','0'},
+                          {'0','0','1','0','0'},
+                          {'0','0','0','1','1'}};
+
+        //System.out.println(numIslands(grid));
+        //System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        ListNode l1 = new ListNode(2);
+        ListNode second = new ListNode(4);
+        ListNode third = new ListNode(3);
+        l1.next = second;
+        second.next = third;
+
+        ListNode l2 = new ListNode(5);
+        ListNode l2sec = new ListNode(6);
+        ListNode l2third = new ListNode(4);
+        l2.next = l2sec;
+        l2sec.next = l2third;
+        System.out.println(addTwoNumbers(l1, l2));
+
+        //System.out.println(majorityElement(nums1));
+        //System.out.println(countBinarySubstrings("00110011"));
+        //System.out.println(Arrays.toString(nextGreaterElement(nums1, nums2)));
+        //System.out.println(pivotIndex(nums));
+        //System.out.println(canConstruct(ransomNote, magazine));
+        //System.out.println(missingNumber(nums));
+        //moveZeroes(nums1);
+        //System.out.println(removeDuplicates(nums1));
+        //System.out.println(reverseWords("Let's take LeetCode contest"));
+        //System.out.println(maximumWealth(accounts));
+
         //merge(nums1, m, nums2, n);
         //System.out.println(fib(2));
         //System.out.println(Arrays.toString(intersection(nums1, nums2)));
@@ -914,15 +1547,7 @@ public class HexaFront {
         //System.out.println(isAnagram("rat", "car"));
 
         //System.out.println(isPalindromeNumber(122));
-//        ListNode node = new ListNode(1);
-//        node.next = node;
-//        ListNode second = new ListNode(2);
-//        ListNode third = new ListNode(2);
-//        ListNode forth = new ListNode(1);
-//
-//        node.next.next = second;
-//        second.next = third;
-//        third.next = forth;
+
         //System.out.println(node);
         //System.out.println("Is this palaindrome linked list :  " + isPalindrome(node));
         //System.out.println(romanToInt("MCMXCIV"));
