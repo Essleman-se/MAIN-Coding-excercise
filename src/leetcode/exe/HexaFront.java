@@ -256,15 +256,15 @@ public class HexaFront {
         return prev;
     }
 
-//    public void display() {
-//        ListNode current = head;
-//        while(current != null) {
-//            System.out.print(current.data + " --> ");
-//            current = current.next;
-//        }
-//        System.out.print("null");
-//        System.out.println();
-//    }
+    public static void display(ListNode head) {
+        ListNode current = head;
+        while(current != null) {
+            System.out.print(current.val + " --> ");
+            current = current.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
     public static boolean isPalindrome(ListNode head) {
 
 
@@ -1471,8 +1471,7 @@ public class HexaFront {
             int y = l2 != null ? l2.val : 0;
             int sum = x + y + carry;
             carry = sum/10;
-            int remainder = sum%10;
-            curr.next = new ListNode(remainder);
+            curr.next = new ListNode(sum%10);
             curr = curr.next;
 
             if(l1 != null) l1 = l1.next;
@@ -1482,9 +1481,119 @@ public class HexaFront {
         if(carry > 0)
             curr.next = new ListNode(carry);
 
+        display(dummy.next);
+
         return dummy.next;
         //Time complexity O(max(l1, l2)
         //Space Complexity O(1)
+    }
+
+    //Longest Palindromic Substring
+    public String longestPalindrome(String s) {
+        if(s == null || s.length()<1) return "";
+
+        int start=0, end=0;
+
+        for(int i=0; i < s.length(); i++){
+            int len1 = exapandFromMidle(s, i, i);
+            int len2 = exapandFromMidle(s, i, i+1);
+            int len = Math.max(len1, len2);
+
+            if(len > end - start){
+                start = i - ((len - 1)/2);
+                end = i +(len/2);
+            }
+        }
+
+
+        return s.substring(start, end+1);
+
+        //Tiem Complexity O(n2)
+        //Space Complexity O(1);
+    }
+
+    private int exapandFromMidle(String s, int left, int right){
+        if(s == null || left > right) return 0;
+
+        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+            left--;
+            right++;
+        }
+
+        return right - left - 1;
+    }
+
+
+    //Add Binary
+    public String addBinary(String a, String b) {
+        StringBuilder sb = new StringBuilder();
+        int carry = 0;
+        int i = a.length()-1;
+        int j = b.length()-1;
+
+        while(i >= 0 || j >= 0){
+            int sum = carry;
+            if(i >= 0)
+                sum += a.charAt(i) - '0'; //ascii java car value '0'->48 and '1'->49
+            if(j >= 0)
+                sum += b.charAt(j) - '0';
+            sb.append(sum%2);
+            carry = sum/2;
+
+            i--;
+            j--;
+        }
+
+        if(carry > 0)
+            sb.append(carry);
+
+       //Time Complexity : O(max(m,n)) m and n is length of string a, b
+        //Space Complexity : O(max(m,n)) m and n is length of string a, b
+
+        return sb.reverse().toString();
+    }
+    //Sqrt(x)
+    public int mySqrt(int x) {
+        long res = 1;
+
+        while(res * res <= x){
+            ++res;
+        }
+
+        return (int) res-1;
+
+    }
+
+    //Check Whether Two Strings are Almost Equivalent
+    public boolean checkAlmostEquivalent(String word1, String word2) {
+        Map<Character, Integer> map = new HashMap();
+
+        for(char c : word1.toCharArray()){
+            if(map.containsKey(c)){
+                map.put(c, map.get(c) + 1);
+            }else{
+                map.put(c, 1);
+
+            }
+        }
+
+        for(char c : word2.toCharArray()){
+            if(map.containsKey(c)){
+                map.put(c, map.get(c) - 1);
+            }else{
+                map.put(c, -1);
+            }
+        }
+
+        for(char k : map.keySet()){
+            if(Math.abs(map.get(k)) > 3){
+                return false;
+            }
+        }
+        //Time Complexity max(word1.len, word2.len)
+        //Space Complexity max(word1.len, word2.len)
+
+        return true;
     }
     public static void main(String[] args){
         String[] strs = {"dog","racecar","car"};
@@ -1557,8 +1666,5 @@ public class HexaFront {
         //System.out.println(longestCommonPrefix(strs));
         //System.out.println(validPalindrome("abcc"));
         //System.out.println(containsDuplicate(ints));
-
-
-
     }
 }
