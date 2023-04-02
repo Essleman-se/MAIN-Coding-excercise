@@ -1,5 +1,7 @@
 package leetcode.exe;
 
+import usedClasses.Person;
+
 import java.util.*;
 
 public class HexaFront {
@@ -1595,6 +1597,53 @@ public class HexaFront {
 
         return true;
     }
+
+    //Valid Palindrome
+    public static boolean isPalindrome2(String s) {
+        //Best solution because space complexity is constant O(1)
+        //Time Complexity O(n)
+        int left = 0;
+        int right = s.length() - 1;
+
+        while(left < right) {
+            while(!Character.isLetterOrDigit(s.charAt(left)) && left < right) {
+                left++;
+            }
+
+            while(!Character.isLetterOrDigit(s.charAt(right)) && right > left) {
+                right--;
+            }
+
+            if(Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+                return false;
+            }
+
+            left++;
+            right--;
+        }
+
+        return true;
+        //this solution use datastructure to store the given string space complexity is constant O(n)
+        //Time Complexity O(n)
+//        StringBuilder sb = new StringBuilder();
+//        int ascii = 0;
+//        for(char c : s.toCharArray()){
+//            char ch = Character.toLowerCase(c);
+//            ascii = (int)ch;
+//            if((ascii >= 97 && ascii <= 122) || (ascii >= 48 && ascii <= 57 )){
+//                sb.append(ch);
+//            }
+//        }
+//
+//        String str = sb.toString();
+//        for(int i=0; i < str.length()/2; i++){
+//            if(str.charAt(i) != str.charAt((str.length()-1)-i)){
+//                return false;
+//            }
+//        }
+//
+//        return true;
+    }
     public static void main(String[] args){
         String[] strs = {"dog","racecar","car"};
         int[] ints = {-1,0,3,5,9,12};
@@ -1617,6 +1666,7 @@ public class HexaFront {
                           {'0','0','1','0','0'},
                           {'0','0','0','1','1'}};
 
+        System.out.println(isPalindrome2("A man, a plan, a canal: Panama"));
         //System.out.println(numIslands(grid));
         //System.out.println(lengthOfLongestSubstring("abcabcbb"));
         ListNode l1 = new ListNode(2);
@@ -1659,12 +1709,16 @@ public class HexaFront {
 
         //System.out.println(node);
         //System.out.println("Is this palaindrome linked list :  " + isPalindrome(node));
-        //System.out.println(romanToInt("MCMXCIV"));
+        System.out.println(romanToInt("VI"));
         //int[] ints = {2,7,11,15};
         //System.out.println(Arrays.toString(twoSum(ints, 9)));
         //System.out.println(isValid("({}[])"));
         //System.out.println(longestCommonPrefix(strs));
         //System.out.println(validPalindrome("abcc"));
         //System.out.println(containsDuplicate(ints));
+
     }
+
+
+
 }
