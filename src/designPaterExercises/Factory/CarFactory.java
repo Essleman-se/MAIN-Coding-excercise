@@ -24,10 +24,7 @@ public class CarFactory {
                             car = new LargeCar();
                             break;
                         default:
-                            throw new CarTypeNotFoundException("Here is the exception of car type");
-
-                            //System.out.println("Car type is not available");
-
+                            throw new CarTypeNotFoundException("The Car Model Is not Exist");
                     }
                 }
             }

@@ -172,7 +172,14 @@ public class HexaFront {
 
         while(i < j){
             if(s.charAt(i) != s.charAt(j)){
-                return isPalaindrom(s, i+1, j) || isPalaindrom(s, i, j-1);
+                System.out.println("i value : " + s.charAt(i+1));
+                System.out.println("J value : " + s.charAt(j));
+                boolean v1 = isPalaindrom(s, i+1, j);
+                System.out.println("i value : " + s.charAt(i));
+                System.out.println("J value : " + s.charAt(j-1));
+                boolean v2 = isPalaindrom(s, i, j-1);
+
+                return v1 || v2;
             }
 
             i++;
@@ -1566,6 +1573,7 @@ public class HexaFront {
 
     }
 
+
     //Check Whether Two Strings are Almost Equivalent
     public boolean checkAlmostEquivalent(String word1, String word2) {
         Map<Character, Integer> map = new HashMap();
@@ -1698,7 +1706,7 @@ public class HexaFront {
         //System.out.println(Arrays.toString(intersection(nums1, nums2)));
         //System.out.println(uniqueOccurrences(ints));
         //System.out.println(generate(5));
-        //System.out.println(search(ints, 9));
+        System.out.println(search(ints, 9));
         //System.out.println(countOdds(3, 7));
         //System.out.println(climbStairs(4));
         //System.out.println(maximumUnits(boxTypes, 4));
@@ -1714,7 +1722,7 @@ public class HexaFront {
         //System.out.println(Arrays.toString(twoSum(ints, 9)));
         //System.out.println(isValid("({}[])"));
         //System.out.println(longestCommonPrefix(strs));
-        //System.out.println(validPalindrome("abcc"));
+        System.out.println(validPalindrome("agbca"));
         //System.out.println(containsDuplicate(ints));
 
     }
